@@ -32,7 +32,6 @@
 </head>
 <body>
 
-
     <?php
 $random_temperature = mt_rand(360, 410) / 10;
 
