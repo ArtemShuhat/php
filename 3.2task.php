@@ -53,8 +53,8 @@ echo "<div style='color: brown; font-size: 24px; text-align: center;'>$result</d
             let temperatureValue = <?php echo $random_temperature; ?>;
 
             function updateMercuryHeight() {
-                let maxTemperature = 42;
-                let minTemperature = 35;
+                let maxTemperature = 41;
+                let minTemperature = 36;
                 let height = (temperatureValue - minTemperature) / (maxTemperature - minTemperature) * 100;
                 mercury.style.height = height + '%';
             }
