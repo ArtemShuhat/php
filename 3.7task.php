@@ -20,10 +20,11 @@
 <body>
 
 <?php
+$t = rand(-20, 20); 
+
 echo "<table>";
 
 for ($i = 20; $i >= -20; $i--) {
-    $t = rand(-20, 20);
     $background_style = $i < $t ? "background: red;" : "background: yellow;";
 
     echo "<tr>";
