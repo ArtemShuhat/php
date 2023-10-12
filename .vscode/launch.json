@@ -33,6 +33,12 @@
             "type": "php",
             "request": "launch",
             "port": 9003
+        },
+        {
+            "name": "Launch index.html",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }
