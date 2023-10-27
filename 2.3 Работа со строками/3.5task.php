@@ -9,10 +9,18 @@
     <?php
     $text = "Ми будемо раді бачити Вашого сина на нашому заході. Чекаємо на нього 25 жовтня. Оргкомітет.";
 
-    $phrases = ($text);
+    $phrases = explode(". ", $text);
 
-    $name = "Максим";
-    $phrases[0] = str_replace("");
+    $name = "Артем";
+    $phrases[0] = "Шановний $name! " . $phrases[0];
+
+    $phrases[count($phrases) - 1] = str_replace("Оргкомітет", "Адміністрація", $phrases[count($phrases) - 1]);
+
+    $phrases[0] = str_replace("Вашого сина", "Вашу дочку", $phrases[0]);
+    $phrases[0] = str_replace("его", "її", $phrases[0]);
+
+    $modified_text = implode("\n", $phrases);
+    echo $modified_text;
     ?>
 </body>
 </html>
