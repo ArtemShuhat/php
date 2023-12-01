@@ -1,0 +1,1 @@
+a:5:{s:4:"user";s:4:"user";s:5:"admin";s:5:"admin";s:3:"pit";s:4:"w123";s:5:"piter";s:6:"qwerty";s:6:"bogdan";s:6:"bogdan";}
