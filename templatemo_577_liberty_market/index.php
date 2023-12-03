@@ -140,7 +140,7 @@ include './assets/php/db.php'
             </div>
           </div>
           <!-- ***** Filters End ***** -->
-<?php foreach ($moviesData as $movie) { ?>
+<?php foreach ($moviesData as $movie) {?>
     <div class="col-lg-6 currently-market-item all">
         <div class="item">
             <div class="left-image">
@@ -153,50 +153,50 @@ include './assets/php/db.php'
                 <p><strong class="strng">Studio:</strong> <?php echo $movie['studio'] ?? 'No Studio '; ?></p>
                 <p><strong class="strng">Rating:</strong> <?php echo $movie['rating'] ?? 'No Rating'; ?><div class="stars">
              <?php
-            $rating = isset($movie['rating']) ? floatval($movie['rating']) : 0;
-            $fullStars = floor($rating / 2);
-            $halfStar = $rating % 2 >= 1 ? 1 : 0;
-            $emptyStars = 5 - $fullStars - $halfStar;
-            
-            for ($i = 0; $i < $fullStars; $i++) {
-                echo '<i class="bx bxs-star"></i>';
-            }
-            
-            if ($halfStar > 0) {
-                echo '<i class="bx bxs-star-half"></i>';
-            }
-            
-            for ($i = 0; $i < $emptyStars; $i++) {
-                echo '<i class="bx bx-star"></i>';
-            }
-        ?>
+$rating = isset($movie['rating']) ? floatval($movie['rating']) : 0;
+    $fullStars = floor($rating / 2);
+    $halfStar = $rating % 2 >= 1 ? 1 : 0;
+    $emptyStars = 5 - $fullStars - $halfStar;
+
+    for ($i = 0; $i < $fullStars; $i++) {
+        echo '<i class="bx bxs-star"></i>';
+    }
+
+    if ($halfStar > 0) {
+        echo '<i class="bx bxs-star-half"></i>';
+    }
+
+    for ($i = 0; $i < $emptyStars; $i++) {
+        echo '<i class="bx bx-star"></i>';
+    }
+    ?>
           </div></p>
                 <p><strong class="strng">Session:</strong> <?php echo ($movie['session_date'] ?? 'No date') . ', ' . ($movie['session_time'] ?? 'No time'); ?></p>
                 <p><strong class="strng">Discount:</strong> <?php echo $movie['discount'] ?? 'No discount '; ?></p>
                 <?php
-                $movieData = [
-                    'title' => $movie['title'],
-                    'poster_path' => $movie['poster_path'],
-                    'genres' => $movie['genres'],
-                    'release_year' => $movie['release_year'],
-                    'director' => $movie['director'],
-                    'rating' => $movie['rating'],
-                    'studio' => $movie['studio'],
-                    'overview' => $movie['overview']
-                ];
+$movieData = [
+        'title' => $movie['title'],
+        'poster_path' => $movie['poster_path'],
+        'genres' => $movie['genres'],
+        'release_year' => $movie['release_year'],
+        'director' => $movie['director'],
+        'rating' => $movie['rating'],
+        'studio' => $movie['studio'],
+        'overview' => $movie['overview'],
+    ];
 
-                $encodedData = json_encode($movieData);
+    $encodedData = json_encode($movieData);
 
-                if ($encodedData === false) {
-                    echo 'Ошибка сериализации данных';
-                } else {
-                    echo '<button class="openModalBtn" data-movie=\'' . htmlspecialchars($encodedData, ENT_QUOTES, 'UTF-8') . '\'>More</button>';
-                }
-                ?>
+    if ($encodedData === false) {
+        echo 'Ошибка сериализации данных';
+    } else {
+        echo '<button class="openModalBtn" data-movie=\'' . htmlspecialchars($encodedData, ENT_QUOTES, 'UTF-8') . '\'>More</button>';
+    }
+    ?>
             </div>
         </div>
     </div>
-<?php } ?>
+<?php }?>
 <div class="modal" id="myModal">
     <div class="modalContent">
         <span class="close">&times;</span>
@@ -292,6 +292,6 @@ include './assets/php/db.php'
     <script src="assets/js/modalWin.js"></script>
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/custom.js"></script>
-    
+
   </body>
 </html>
