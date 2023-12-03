@@ -32,7 +32,7 @@ foreach ($movies['results'] as $movie) {
 
 
     // *** Poster Start ***
-    $poster = isset($movie['poster_path']) ? 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'] : 'Нет данных о постере';
+    $poster = isset($movie['poster_path']) ? 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'] : 'No poster information';
     // *** Poster End ***
 
 
@@ -48,25 +48,25 @@ foreach ($movies['results'] as $movie) {
             }
         }
 
-        $director = (!empty($directors)) ? implode(', ', $directors) : 'Информация о режиссерах недоступна';
+        $director = (!empty($directors)) ? implode(', ', $directors) : 'Information about directors is not available';
     } else {
-        $director = 'Информация о режиссерах недоступна';
+        $director = 'Information about directors is not available';
     }
     //*** Directors End ***
 
 
     //*** ReleaseYear Start ***
-    $releaseYear = isset($movie['release_date']) ? substr($movie['release_date'], 0, 4) : 'Нет данных о годе выпуска';
+    $releaseYear = isset($movie['release_date']) ? substr($movie['release_date'], 0, 4) : 'No information about the year of production';
     //*** ReleaseYear End ***
 
 
     //*** overview Start ***
-    $overview = isset($movieDetails['overview']) ? $movieDetails['overview'] : 'Описание недоступно';
+    $overview = isset($movieDetails['overview']) ? $movieDetails['overview'] : 'Description not available';
     //*** overview End ***
 
 
     //*** Rating Start ***
-    $rating = isset($movieDetails['vote_average']) ? number_format($movieDetails['vote_average'], 1) : 'Рейтинг недоступен';
+    $rating = isset($movieDetails['vote_average']) ? round($movieDetails['vote_average']) : 'Rating not available';
     //*** Rating End ***
 
 
@@ -78,7 +78,7 @@ foreach ($movies['results'] as $movie) {
         $productionCompaniesList[] = $company['name'];
     }
 
-    $studio = !empty($productionCompaniesList) ? implode(', ', $productionCompaniesList) : 'Информация о киностудии недоступна';
+    $studio = !empty($productionCompaniesList) ? implode(', ', $productionCompaniesList) : 'Information about the film studio is not available';
     //*** Studio End ***
 
 
@@ -95,14 +95,14 @@ foreach ($movies['results'] as $movie) {
     //*** randomTicket End ***
 
 
-    //*** randomTicket Start ***
+    //*** randomPlace Start ***
     $randomPlace = rand(12, 40); 
-    //*** randomTicket End ***
+    //*** randomPlace End ***
 
 
     //*** Discount Start ***
     $randNumDis = rand(0, 1);
-    $discount = ($randNumDis == 1) ? rand(10, 25) : "No discount now";
+    $discount = ($randNumDis == 1) ? rand(10, 25) . "%" : "No discount now";
     //*** Discount End ***
 
     

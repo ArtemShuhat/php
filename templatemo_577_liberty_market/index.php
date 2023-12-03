@@ -23,6 +23,9 @@ include './assets/php/db.php'
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
+    <!-- box icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
     <link rel="stylesheet" href="assets/css/templatemo-liberty-market.css" />
@@ -145,18 +148,51 @@ include './assets/php/db.php'
             </div>
             <div class="right-content">
                 <h4><?php echo $movie['title'] ?? 'No Title'; ?></h4>
-                <p><strong>Genre:</strong> <?php echo $movie['genres'] ?? 'No Genre'; ?></p>
-                <p><strong>Release Year:</strong> <?php echo $movie['release_year'] ?? 'No Year'; ?></p>
-                <p><strong>Director:</strong> <?php echo $movie['director'] ?? 'No Director'; ?></p>
-                <p><strong>Rating:</strong> <?php echo $movie['rating'] ?? 'No Rating'; ?></p>
-                <p><strong>Studio:</strong> <?php echo $movie['studio'] ?? 'No Studio '; ?></p>
-                <p><strong>session_date:</strong> <?php echo $movie['session_date'] ?? 'No date '; ?>,</p><p><?php echo $movie['session_time'] ?? 'No time '; ?></p>
-                <p><strong>Ticket:</strong> <?php echo $movie['random_ticket'] ?? 'No ticket '; ?>$</p>
-                <p><strong>Places:</strong> <?php echo $movie['random_place'] ?? 'No place '; ?></p>
-                <p><strong>Discount:</strong> <?php echo $movie['discount'] ?? 'No discount '; ?>%</p>
-                <p><strong>Overview:</strong> <?php echo $movie['overview'] ?? 'No Overview'; ?></p>
-                <button class="openModalBtn" id="openModalBtn" data-movie='<?php echo json_encode($movie); ?>'>More</button>
+                <p><strong class="strng">Genre:</strong> <?php echo $movie['genres'] ?? 'No Genre'; ?></p>
+                <p><strong class="strng">Release Year:</strong> <?php echo $movie['release_year'] ?? 'No Year'; ?></p>
+                <p><strong class="strng">Studio:</strong> <?php echo $movie['studio'] ?? 'No Studio '; ?></p>
+                <p><strong class="strng">Rating:</strong> <?php echo $movie['rating'] ?? 'No Rating'; ?><div class="stars">
+             <?php
+            $rating = isset($movie['rating']) ? floatval($movie['rating']) : 0;
+            $fullStars = floor($rating / 2);
+            $halfStar = $rating % 2 >= 1 ? 1 : 0;
+            $emptyStars = 5 - $fullStars - $halfStar;
+            
+            for ($i = 0; $i < $fullStars; $i++) {
+                echo '<i class="bx bxs-star"></i>';
+            }
+            
+            if ($halfStar > 0) {
+                echo '<i class="bx bxs-star-half"></i>';
+            }
+            
+            for ($i = 0; $i < $emptyStars; $i++) {
+                echo '<i class="bx bx-star"></i>';
+            }
+        ?>
+          </div></p>
+                <p><strong class="strng">Session:</strong> <?php echo ($movie['session_date'] ?? 'No date') . ', ' . ($movie['session_time'] ?? 'No time'); ?></p>
+                <p><strong class="strng">Discount:</strong> <?php echo $movie['discount'] ?? 'No discount '; ?></p>
+                <?php
+                $movieData = [
+                    'title' => $movie['title'],
+                    'poster_path' => $movie['poster_path'],
+                    'genres' => $movie['genres'],
+                    'release_year' => $movie['release_year'],
+                    'director' => $movie['director'],
+                    'rating' => $movie['rating'],
+                    'studio' => $movie['studio'],
+                    'overview' => $movie['overview']
+                ];
 
+                $encodedData = json_encode($movieData);
+
+                if ($encodedData === false) {
+                    echo 'Ошибка сериализации данных';
+                } else {
+                    echo '<button class="openModalBtn" data-movie=\'' . htmlspecialchars($encodedData, ENT_QUOTES, 'UTF-8') . '\'>More</button>';
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -164,64 +200,57 @@ include './assets/php/db.php'
 <div class="modal" id="myModal">
     <div class="modalContent">
         <span class="close">&times;</span>
-        <div id="modalOverview">
-          <div class="left-image" id="modalInfo">
-          </div>
-        </div>
+        <div id="modalInfo"></div>
     </div>
 </div>
 
 <script>
-// Находим все кнопки "More"
-let openModalBtns = document.querySelectorAll('.openModalBtn');
+    let openModalBtns = document.querySelectorAll('.openModalBtn');
+    let modal = document.getElementById('myModal');
+    let closeModal = document.querySelector('.close');
 
-// Находим модальное окно и кнопку закрытия
-let modal = document.getElementById('myModal');
-let closeModal = document.querySelector('.close');
+    function displayInfo(movie) {
+        let modalInfo = document.getElementById('modalInfo');
+        modalInfo.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title ?? 'No Title'}" style="border-radius: 20px; max-width: 195px" />
+            <p><strong>Title:</strong> ${movie.title}</p>
+            <p><strong>Genre:</strong> ${movie.genres}</p>
+            <p><strong>Release Year:</strong> ${movie.release_year}</p>
+            <p><strong>Director:</strong> ${movie.director}</p>
+            <p><strong>Rating:</strong> ${movie.rating}</p>
+            <p><strong>Studio:</strong> ${movie.studio}</p>
+            <p><strong>Overview:</strong> ${movie.overview}</p>
+        `;
+    }
 
-// Функция для отображения информации о фильме в модальном окне
-function displayInfo(movie) {
-    let modalInfo = document.getElementById('modalInfo');
-    modalInfo.innerHTML = `
-        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title ?? 'No Title'}" style="border-radius: 20px; max-width: 195px" />
-        <p><strong>Title:</strong> ${movie.title}</p>
-        <p><strong>Genre:</strong> ${movie.genres}</p>
-        <p><strong>Release Year:</strong> ${movie.release_year}</p>
-        <p><strong>Director:</strong> ${movie.director}</p>
-        <p><strong>Rating:</strong> ${movie.rating}</p>
-        <p><strong>Studio:</strong> ${movie.studio}</p>
-        <p><strong>Overview:</strong> ${movie.overview}</p>
-    `;
-}
+    function openModal(event) {
+        try {
+            let movie = JSON.parse(event.target.dataset.movie);
+            displayInfo(movie);
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
+    }
 
-// Функция для открытия модального окна с информацией о фильме
-function openModal(event) {
-    let movie = JSON.parse(event.target.dataset.movie);
-    displayInfo(movie);
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden'; // Блокировка скролла
-}
+    openModalBtns.forEach(function(btn) {
+        btn.addEventListener('click', openModal);
+    });
 
-// Добавляем обработчик события на каждую кнопку "More"
-openModalBtns.forEach(function(btn) {
-    btn.addEventListener('click', openModal);
-});
-
-// Закрытие модального окна при нажатии на кнопку закрытия
-closeModal.addEventListener('click', function() {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-});
-
-// Закрытие модального окна при клике за его пределами
-window.addEventListener('click', function(event) {
-    if (event.target == modal) {
+    closeModal.addEventListener('click', function() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-    }
-});
+    });
 
+    window.addEventListener('click', function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
 </script>
+
 
         </div>
     </div>
