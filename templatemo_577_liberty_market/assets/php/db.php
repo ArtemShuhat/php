@@ -7,24 +7,24 @@ $moviesData = [];
 $apiData = file_get_contents($apiUrl);
 $movies = json_decode($apiData, true);
 
-foreach ($movies['results'] as $movie) {
-    $movieDetailsUrl = 'https://api.themoviedb.org/3/movie/' . $movie['id'] . '?api_key=' . $apiKey . '&language=en-US';
+foreach($movies['results'] as $movie) {
+    $movieDetailsUrl = 'https://api.themoviedb.org/3/movie/'.$movie['id'].'?api_key='.$apiKey.'&language=en-US';
     $movieDetails = json_decode(file_get_contents($movieDetailsUrl), true);
 
 
     // *** Genres Start ***
-    $genresUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' . $apiKey . '&language=en-US';
+    $genresUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key='.$apiKey.'&language=en-US';
     $genresData = json_decode(file_get_contents($genresUrl), true);
     $genresMap = [];
 
-    if (isset($genresData['genres']) && is_array($genresData['genres'])) {
-        foreach ($genresData['genres'] as $genre) {
+    if(isset($genresData['genres']) && is_array($genresData['genres'])) {
+        foreach($genresData['genres'] as $genre) {
             $genresMap[$genre['id']] = $genre['name'];
         }
     }
     $genres = [];
-    foreach ($movie['genre_ids'] as $genreId) {
-        if (isset($genresMap[$genreId])) {
+    foreach($movie['genre_ids'] as $genreId) {
+        if(isset($genresMap[$genreId])) {
             $genres[] = $genresMap[$genreId];
         }
     }
@@ -32,18 +32,18 @@ foreach ($movies['results'] as $movie) {
 
 
     // *** Poster Start ***
-    $poster = isset($movie['poster_path']) ? 'https://image.tmdb.org/t/p/w500/' . $movie['poster_path'] : 'No poster information';
+    $poster = isset($movie['poster_path']) ? 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'] : 'No poster information';
     // *** Poster End ***
 
 
     //*** Directors Start ***
-    $movieCreditsUrl = 'https://api.themoviedb.org/3/movie/' . $movie['id'] . '/credits?api_key=' . $apiKey;
+    $movieCreditsUrl = 'https://api.themoviedb.org/3/movie/'.$movie['id'].'/credits?api_key='.$apiKey;
     $movieCreditsData = json_decode(file_get_contents($movieCreditsUrl), true);
-    if (isset($movieCreditsData['crew'])) {
+    if(isset($movieCreditsData['crew'])) {
         $directors = [];
 
-        foreach ($movieCreditsData['crew'] as $crewMember) {
-            if ($crewMember['job'] === 'Director') {
+        foreach($movieCreditsData['crew'] as $crewMember) {
+            if($crewMember['job'] === 'Director') {
                 $directors[] = $crewMember['name'];
             }
         }
@@ -74,7 +74,7 @@ foreach ($movies['results'] as $movie) {
     $productionCompanies = isset($movieDetails['production_companies']) ? $movieDetails['production_companies'] : [];
     $productionCompaniesList = [];
 
-    foreach ($productionCompanies as $company) {
+    foreach($productionCompanies as $company) {
         $productionCompaniesList[] = $company['name'];
     }
 
@@ -83,29 +83,29 @@ foreach ($movies['results'] as $movie) {
 
 
     //*** Session date/time Start ***
-    $randomHour = rand(10, 23); 
-    $randomMinute = rand(0, 59); 
+    $randomHour = rand(10, 23);
+    $randomMinute = rand(0, 59);
     $randomTime = sprintf('%02d:%02d', $randomHour, $randomMinute);
-    $randomDate = date('Y-m-d'); 
+    $randomDate = date('Y-m-d');
     //*** Session date/time End ***
 
 
     //*** randomTicket Start ***
-    $randomTicket = rand(20, 40); 
+    $randomTicket = rand(20, 40);
     //*** randomTicket End ***
 
 
     //*** randomPlace Start ***
-    $randomPlace = rand(12, 40); 
+    $randomPlace = rand(12, 40);
     //*** randomPlace End ***
 
 
     //*** Discount Start ***
     $randNumDis = rand(0, 1);
-    $discount = ($randNumDis == 1) ? rand(10, 25) . "%" : "No discount now";
+    $discount = ($randNumDis == 1) ? rand(10, 25)."%" : "No discount now";
     //*** Discount End ***
 
-    
+
 
     $moviesData[] = [
         'title' => $movie['title'],
@@ -120,9 +120,9 @@ foreach ($movies['results'] as $movie) {
         'session_time' => $randomTime,
         'random_ticket' => $randomTicket,
         'random_place' => $randomPlace,
-        'discount' => $discount, 
+        'discount' => $discount,
     ];
 }
 
-  
+
 ?>
