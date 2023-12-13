@@ -1,6 +1,20 @@
 <?php
-include './assets/php/db.php'
-  ?>
+include './assets/php/db.php';
+include './assets/php/action.php';
+
+
+if (isset($_GET['sort_by'])) {
+  if ($_GET['sort_by'] === 'directors') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'directors');
+  }
+  if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'genre') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'sortByFirstGenre');
+  }
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -14,7 +28,7 @@ include './assets/php/db.php'
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
     rel="stylesheet" />
 
-  <title>Liberty NFT Marketplace - HTML CSS Template</title>
+  <title>Radiant Rise</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -28,6 +42,8 @@ include './assets/php/db.php'
   <link rel="stylesheet" href="assets/css/owl.css" />
   <link rel="stylesheet" href="assets/css/animate.css" />
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -121,20 +137,21 @@ include './assets/php/db.php'
         <!-- ***** Filters Start ***** -->
         <div class="col-lg-6">
           <div class="filters">
-            <ul>
-              <li data-filter="*" class="active">Popular Films</li>
-              <li data-filter="">Directors</li>
-              <li data-filter="">Genre Selection</li>
-              <li data-filter="">Rating</li>
-              <li data-filter="">Studio</li>
-              <li data-filter="">Session Start</li>
-              <li data-filter="">Ticket Price</li>
+            <ul id="filterList">
+              <li data-filter="*" class="active" data-value="popular" id="popularBtn">Popular Films</li>
+              <li data-filter="directors" id="directorsBtn" data-value="directors">Directors</li>
+              <li data-filter="genre" data-value="genre" id="genre">Genre Selection</li>
+              <li data-filter="rating" data-value="rating">Rating</li>
+              <li data-filter="studio" data-value="studio">Studio</li>
+              <li data-filter="session" data-value="session">Session Start</li>
+              <li data-filter="ticket" data-value="ticket">Ticket Price</li>
             </ul>
           </div>
         </div>
+
         <!-- ***** Filters End ***** -->
-        <?php foreach($moviesData as $movie) { ?>
-          <div class="col-lg-6 currently-market-item all">
+        <?php foreach ($moviesData as $movie) { ?>
+          <div class="col-lg-6 currently-market-item all" class="movies-container">
             <div class="item">
               <div class="left-image">
                 <img src="https://image.tmdb.org/t/p/w500<?php echo $movie['poster_path']; ?>"
@@ -159,22 +176,22 @@ include './assets/php/db.php'
                   $halfStar = $rating % 2 >= 1 ? 1 : 0;
                   $emptyStars = 5 - $fullStars - $halfStar;
 
-                  for($i = 0; $i < $fullStars; $i++) {
+                  for ($i = 0; $i < $fullStars; $i++) {
                     echo '<i class="bx bxs-star"></i>';
                   }
 
-                  if($halfStar > 0) {
+                  if ($halfStar > 0) {
                     echo '<i class="bx bxs-star-half"></i>';
                   }
 
-                  for($i = 0; $i < $emptyStars; $i++) {
+                  for ($i = 0; $i < $emptyStars; $i++) {
                     echo '<i class="bx bx-star"></i>';
                   }
                   ?>
                 </div>
                 </p>
                 <p><strong class="strng">Session:</strong>
-                  <?php echo ($movie['session_date'] ?? 'No date').', '.($movie['session_time'] ?? 'No time'); ?>
+                  <?php echo ($movie['session_date'] ?? 'No date') . ', ' . ($movie['session_time'] ?? 'No time'); ?>
                 </p>
                 <p><strong class="strng">Discount:</strong>
                   <?php echo $movie['discount'] ?? 'No discount '; ?>
@@ -198,16 +215,43 @@ include './assets/php/db.php'
 
                 $encodedData = json_encode($movieData);
 
-                if($encodedData === false) {
+                if ($encodedData === false) {
                   echo 'Data serialization error';
                 } else {
-                  echo '<button class="openModalBtn" data-movie=\''.htmlspecialchars($encodedData, ENT_QUOTES, 'UTF-8').'\'>More</button>';
+                  echo '<button class="openModalBtn" data-movie=\'' . htmlspecialchars($encodedData, ENT_QUOTES, 'UTF-8') . '\'>More</button>';
                 }
                 ?>
               </div>
             </div>
           </div>
         <?php } ?>
+        <script>
+          document.getElementById('directorsBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=directors';
+          });
+
+          document.getElementById('popularBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = url.toString();
+          });
+
+          document.getElementById('genre').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=genre';
+          });
+        </script>
+
+
         <div class="modal" id="myModal">
           <div class="modalContent">
             <span class="close">&times;</span>
@@ -271,9 +315,6 @@ include './assets/php/db.php'
       </div>
     </div>
 
-  </div>
-  </div>
-  </div>
   </div>
 
   <footer>
