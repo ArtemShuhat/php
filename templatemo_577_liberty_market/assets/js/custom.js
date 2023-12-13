@@ -22,23 +22,37 @@
 	  }
 	});
 	
-	$('.filters ul li').click(function(){
-        $('.filters ul li').removeClass('active');
-        $(this).addClass('active');
-          
-          var data = $(this).attr('data-filter');
-          $grid.isotope({
-            filter: data
-          })
-        });
+	$(document).ready(function() {
+  // Проверяем, есть ли сохраненное состояние активного элемента в localStorage
+  var activeFilter = localStorage.getItem('activeFilter');
+  
+  // Если есть сохраненное значение, устанавливаем его как активное состояние
+  if (activeFilter) {
+    $('.filters ul li').removeClass('active');
+    $('.filters ul li[data-filter="' + activeFilter + '"]').addClass('active');
+  }
 
-        var $grid = $(".grid").isotope({
-          	itemSelector: ".all",
-          	percentPosition: true,
-          	masonry: {
-            columnWidth: ".all"
-        }
-    })
+  $('.filters ul li').click(function() {
+    $('.filters ul li').removeClass('active');
+    $(this).addClass('active');
+
+    var data = $(this).attr('data-filter');
+    $grid.isotope({
+      filter: data
+    });
+
+    // Сохраняем активное состояние в localStorage
+    localStorage.setItem('activeFilter', data);
+  });
+
+  var $grid = $(".grid").isotope({
+    itemSelector: ".all",
+    percentPosition: true,
+    masonry: {
+      columnWidth: ".all"
+    }
+  });
+});
 
 	var width = $(window).width();
 		$(window).resize(function() {

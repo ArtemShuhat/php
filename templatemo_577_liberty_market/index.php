@@ -6,11 +6,27 @@ include './assets/php/action.php';
 if (isset($_GET['sort_by'])) {
   if ($_GET['sort_by'] === 'directors') {
     include_once "./assets/php/action.php";
-    usort($moviesData, 'directors');
+    usort($moviesData, 'SortGenres');
   }
-  if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'genre') {
+  if ($_GET['sort_by'] === 'genre') {
     include_once "./assets/php/action.php";
-    usort($moviesData, 'sortByFirstGenre');
+    usort($moviesData, 'SortGenres');
+  }
+  if ($_GET['sort_by'] === 'rating') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'SortRating');
+  }
+  if ($_GET['sort_by'] === 'session_time') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'sortSessionTime');
+  }
+  if ($_GET['sort_by'] === 'random_ticket') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'sortPriceTicket');
+  }
+  if ($_GET['sort_by'] === 'studio') {
+    include_once "./assets/php/action.php";
+    usort($moviesData, 'SortStudio');
   }
 }
 
@@ -138,13 +154,13 @@ if (isset($_GET['sort_by'])) {
         <div class="col-lg-6">
           <div class="filters">
             <ul id="filterList">
-              <li data-filter="*" class="active" data-value="popular" id="popularBtn">Popular Films</li>
-              <li data-filter="directors" id="directorsBtn" data-value="directors">Directors</li>
-              <li data-filter="genre" data-value="genre" id="genre">Genre Selection</li>
-              <li data-filter="rating" data-value="rating">Rating</li>
-              <li data-filter="studio" data-value="studio">Studio</li>
-              <li data-filter="session" data-value="session">Session Start</li>
-              <li data-filter="ticket" data-value="ticket">Ticket Price</li>
+              <li data-filter="*" class="filterBtn active" data-value="popular" id="popularBtn">Popular Films</li>
+              <li data-filter="directors" class="filterBtn" id="directorsBtn" data-value="directors">Directors</li>
+              <li data-filter="genre" class="filterBtn" data-value="genre" id="genreBtn">Genre Selection</li>
+              <li data-filter="rating" class="filterBtn" data-value="rating" id="ratingBtn">Rating</li>
+              <li data-filter="studio" class="filterBtn" data-value="studio" id="studioBtn">Studio</li>
+              <li data-filter="session" class="filterBtn" data-value="session" id="sessionBtn">Session Start</li>
+              <li data-filter="ticket" class="filterBtn" data-value="ticket" id="ticketBtn">Ticket Price</li>
             </ul>
           </div>
         </div>
@@ -242,12 +258,43 @@ if (isset($_GET['sort_by'])) {
             window.location.href = url.toString();
           });
 
-          document.getElementById('genre').addEventListener('click', function () {
+          document.getElementById('genreBtn').addEventListener('click', function () {
             var url = new URL(window.location.href);
             if (url.searchParams.has('sort_by')) {
               url.searchParams.delete('sort_by');
             }
             window.location.href = '?sort_by=genre';
+          });
+
+          document.getElementById('ratingBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=rating';
+          });
+
+          document.getElementById('sessionBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=session_time';
+          });
+
+          document.getElementById('ticketBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=random_ticket';
+          });
+          document.getElementById('studioBtn').addEventListener('click', function () {
+            var url = new URL(window.location.href);
+            if (url.searchParams.has('sort_by')) {
+              url.searchParams.delete('sort_by');
+            }
+            window.location.href = '?sort_by=studio';
           });
         </script>
 
@@ -276,7 +323,7 @@ if (isset($_GET['sort_by'])) {
             <p><strong>Rating:</strong> ${movie.rating}</p>
             <p><strong>Studio:</strong> ${movie.studio}</p>
             <p><strong>Date:</strong> ${movie.session_date},${movie.session_time}</p>
-            <p><strong>Ticket:</strong> ${movie.random_ticket}</p>
+            <p><strong>Ticket:</strong> ${movie.random_ticket}$</p>
             <p><strong>Place:</strong> ${movie.random_place}</p>
             <p><strong>Discount:</strong> ${movie.discount}</p>
             <p><strong>Overview:</strong> ${movie.overview}</p>
