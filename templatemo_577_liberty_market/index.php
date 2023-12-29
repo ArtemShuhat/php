@@ -1,6 +1,7 @@
 <?php
 include './assets/php/db.php';
 include './assets/php/action.php';
+include './assets/php/search.php';
 
 
 if (isset($_GET['sort_by'])) {
@@ -165,9 +166,28 @@ if (isset($_GET['sort_by'])) {
           </div>
         </div>
 
+
+        <div class="search-container">
+          <form id="searchForm">
+            <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+            <button type="button" class="search-button" id="searchBtn">Search</button>
+          </form>
+        </div>
+
+        <script>
+          document.getElementById('searchBtn').addEventListener('click', function () {
+            var searchQuery = document.getElementById('searchInput').value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('search', searchQuery);
+            window.location.href = url.toString();
+          });
+        </script>
+
+
+
         <!-- ***** Filters End ***** -->
         <?php foreach ($moviesData as $movie) { ?>
-          <div class="col-lg-6 currently-market-item all" class="movies-container">
+          <div class="col-lg-6 currently-market-item all movies-container">
             <div class="item">
               <div class="left-image">
                 <img src="https://image.tmdb.org/t/p/w500<?php echo $movie['poster_path']; ?>"
@@ -241,6 +261,9 @@ if (isset($_GET['sort_by'])) {
             </div>
           </div>
         <?php } ?>
+
+
+
         <script>
           document.getElementById('directorsBtn').addEventListener('click', function () {
             var url = new URL(window.location.href);

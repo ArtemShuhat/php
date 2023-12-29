@@ -83,6 +83,8 @@
 		}
 	});
 
+	
+
 	$('.owl-features').owlCarousel({
 		items:3,
 		loop:true,
