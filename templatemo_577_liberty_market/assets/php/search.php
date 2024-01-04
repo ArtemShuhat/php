@@ -36,23 +36,21 @@ function searchMoviesByDirector($moviesData, $searchQuery)
 
 if (isset($_GET['search'])) {
     $searchQuery = $_GET['search'];
-    $isSearchByStudio = false;
+    $foundMovies = [];
 
-    foreach ($moviesData as $movie) {
-        if (stripos($movie['studio'], $searchQuery) !== false) {
-            $isSearchByStudio = true;
-            break;
-        }
+    if (empty($foundMovies)) {
+        $foundMovies = searchMoviesByTitle($moviesData, $searchQuery);
+    }
+    if (empty($foundMovies)) {
+        $foundMovies = searchMoviesByStudio($moviesData, $searchQuery);
+    }
+    if (empty($foundMovies)) {
+        $foundMovies = searchMoviesByGenre($moviesData, $searchQuery);
+    }
+    if (empty($foundMovies)) {
+        $foundMovies = searchMoviesByDirector($moviesData, $searchQuery);
     }
 
-    if ($isSearchByStudio) {
-        $moviesData = searchMoviesByStudio($moviesData, $searchQuery);
-    } else if ($isSearchByStudio) {
-        $moviesData = searchMoviesByTitle($moviesData, $searchQuery);
-    } else if ($isSearchByStudio) {
-        $moviesData = searchMoviesByGenre($moviesData, $searchQuery);
-    } else {
-        $moviesData = searchMoviesByDirector($moviesData, $searchQuery);
-    }
+    $moviesData = $foundMovies;
 }
 ?>

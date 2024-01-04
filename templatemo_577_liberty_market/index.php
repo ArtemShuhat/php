@@ -90,10 +90,10 @@ if (isset($_GET['sort_by'])) {
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="index.html" class="active">Search</a></li>
-              <li><a href="explore.html">Screenings</a></li>
-              <li><a href="details.html">Info</a></li>
-              <li><a href="create.html">Login</a></li>
+              <li><a href="" class="active">Search</a></li>
+              <li><a href="">Screenings</a></li>
+              <li><a href="">Info</a></li>
+              <li><a href="" class="openLogin">Login</a></li>
             </ul>
             <a class="menu-trigger">
               <span>Menu</span>
@@ -104,6 +104,37 @@ if (isset($_GET['sort_by'])) {
       </div>
     </div>
   </header>
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close" id="closeModalLogin">&times;</span>
+      <h2>Login</h2>
+      <form action="" method="post" <input type="text" placeholder="Username" name="username">
+        <input type="password" placeholder="Password" name="password">
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const openLogin = document.querySelector('.openLogin');
+    const loginModal = document.getElementById('loginModal');
+    const closeModalLogin = document.getElementById('closeModalLogin');
+
+    openLogin.addEventListener('click', function () {
+      loginModal.style.display = 'block';
+    });
+
+    // Закрытие модального окна при нажатии на "закрыть"
+    closeModalLogin.addEventListener('click', function () {
+      loginModal.style.display = 'none';
+    });
+
+    // Закрытие модального окна при нажатии на пустое место вне окна
+    window.addEventListener('click', function (event) {
+      if (event.target === loginModal) {
+        loginModal.style.display = 'none';
+      }
+    });</script>
+
   <!-- ***** Header Area End ***** -->
 
   <!-- ***** Main Banner Area Start ***** -->
