@@ -1,5 +1,6 @@
 <?php
 include './assets/php/db.php';
+include './assets/php/db_API.php';
 include './assets/php/action.php';
 include './assets/php/search.php';
 
@@ -30,7 +31,6 @@ if (isset($_GET['sort_by'])) {
     usort($moviesData, 'SortStudio');
   }
 }
-
 ?>
 
 
@@ -39,7 +39,7 @@ if (isset($_GET['sort_by'])) {
 
 <head>
   <meta charset="utf-8" />
-  <meta name="author" content="templatemo" />
+  <meta name="" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
@@ -52,6 +52,9 @@ if (isset($_GET['sort_by'])) {
 
   <!-- box icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+
+  <!-- Unicons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
 
   <!-- Additional CSS Files -->
   <link rel="stylesheet" href="assets/css/fontawesome.css" />
@@ -90,10 +93,9 @@ if (isset($_GET['sort_by'])) {
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="" class="active">Search</a></li>
-              <li><a href="">Screenings</a></li>
-              <li><a href="">Info</a></li>
-              <li><a href="" class="openLogin">Login</a></li>
+              <li><a href="#main-banner" class="active">Info</a></li>
+              <li><a href="#currently-market">Screenings</a></li>
+              <li><a href="" id="form-open">Login</a></li>
             </ul>
             <a class="menu-trigger">
               <span>Menu</span>
@@ -104,41 +106,40 @@ if (isset($_GET['sort_by'])) {
       </div>
     </div>
   </header>
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <span class="close" id="closeModalLogin">&times;</span>
-      <h2>Login</h2>
-      <form action="" method="post" <input type="text" placeholder="Username" name="username">
-        <input type="password" placeholder="Password" name="password">
-        <button type="submit">Login</button>
-      </form>
+  <div class="login">
+    <div class="form_container">
+      <i class="bx bx-x form_close"></i>
+      <div class="form login_form">
+        <form method="POST" action="">
+          <h2>Login</h2>
+
+          <div class="input_box">
+            <input type="text" id="username" name="username" placeholder="Enter Your Name" required />
+            <i class="bx bx-envelope name"></i>
+          </div>
+          <div class="input_box">
+            <input type="password" id="password" name="password" placeholder="Enter Your Password" required />
+            <i class="bx bx-lock-alt password"></i>
+            <i class="uil uil-eye-slash pw_hide"></i>
+          </div>
+          <div class="option_field">
+            <span class="checkbox">
+              <input type="checkbox" id="checkLogin" />
+              <label for="check">Remember me</label>
+            </span>
+            <a href="#" class="forgot_pw">Forgot password?</a>
+          </div>
+          <button class="login-now">Login now</button>
+        </form>
+      </div>
+
     </div>
   </div>
-  <script>
-    const openLogin = document.querySelector('.openLogin');
-    const loginModal = document.getElementById('loginModal');
-    const closeModalLogin = document.getElementById('closeModalLogin');
-
-    openLogin.addEventListener('click', function () {
-      loginModal.style.display = 'block';
-    });
-
-    // Закрытие модального окна при нажатии на "закрыть"
-    closeModalLogin.addEventListener('click', function () {
-      loginModal.style.display = 'none';
-    });
-
-    // Закрытие модального окна при нажатии на пустое место вне окна
-    window.addEventListener('click', function (event) {
-      if (event.target === loginModal) {
-        loginModal.style.display = 'none';
-      }
-    });</script>
 
   <!-- ***** Header Area End ***** -->
 
   <!-- ***** Main Banner Area Start ***** -->
-  <div class="main-banner">
+  <div id="main-banner" class="main-banner">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 align-self-center">
@@ -151,9 +152,17 @@ if (isset($_GET['sort_by'])) {
               blockbuster hits and timeless classics in an atmosphere that
               ignites your passion for movies.
             </p>
+
+            <div id="loginMessage">
+              <h4 class="loginMes">
+                <?php
+                include './assets/php/login_check.php';
+                ?>
+              </h4>
+            </div>
             <div class="buttons">
               <div class="main-button">
-                <a href="" target="_blank">Proceed to Watch</a>
+                <a href="#currently-market">Proceed to Watch</a>
               </div>
             </div>
           </div>
@@ -173,7 +182,7 @@ if (isset($_GET['sort_by'])) {
   </div>
   <!-- ***** Main Banner Area End ***** -->
 
-  <div class="currently-market">
+  <div id="currently-market" class="currently-market">
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
@@ -198,7 +207,7 @@ if (isset($_GET['sort_by'])) {
         </div>
 
 
-        <div class="search-container">
+        <div id="search-container" class="search-container">
           <form id="searchForm">
             <input type="text" id="searchInput" placeholder="Search..." class="search-input">
             <button type="button" class="search-button" id="searchBtn">Search</button>
@@ -278,6 +287,7 @@ if (isset($_GET['sort_by'])) {
                   'session_time' => $movie['session_time'],
                   'session_date' => $movie['session_date'],
                   'discount' => $movie['discount'],
+                  'rand_profit' => $movie['rand_profit'],
                 ];
 
                 $encodedData = json_encode($movieData);
@@ -360,15 +370,33 @@ if (isset($_GET['sort_by'])) {
           </div>
         </div>
 
-
         <script>
           let openModalBtns = document.querySelectorAll('.openModalBtn');
           let modal = document.getElementById('myModal');
           let closeModal = document.querySelector('.close');
+          let userRole = "<?php echo isset($userRole) ? $userRole : ''; ?>";
 
           function displayInfo(movie) {
             let modalInfo = document.getElementById('modalInfo');
-            modalInfo.innerHTML = `
+
+            if (userRole === 'admin') {
+              modalInfo.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title ?? 'No Title'}" style="border-radius: 20px; max-width: 195px" />
+            <p><strong>Title:</strong> ${movie.title}</p>
+            <p><strong>Genre:</strong> ${movie.genres}</p>
+            <p><strong>Director:</strong> ${movie.director}</p>
+            <p><strong>Release Year:</strong> ${movie.release_year}</p>
+            <p><strong>Rating:</strong> ${movie.rating}</p>
+            <p><strong>Studio:</strong> ${movie.studio}</p>
+            <p><strong>Date:</strong> ${movie.session_date},${movie.session_time}</p>
+            <p><strong>Ticket:</strong> ${movie.random_ticket}$</p>
+            <p><strong>Place:</strong> ${movie.random_place}</p>
+            <p><strong>Discount:</strong> ${movie.discount}</p>
+            <p><strong>Profit:</strong> ${movie.rand_profit}$</p>
+            <p><strong>Overview:</strong> ${movie.overview}</p>
+        `;
+            } else if (userRole === 'user') {
+              modalInfo.innerHTML = `
             <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title ?? 'No Title'}" style="border-radius: 20px; max-width: 195px" />
             <p><strong>Title:</strong> ${movie.title}</p>
             <p><strong>Genre:</strong> ${movie.genres}</p>
@@ -382,7 +410,25 @@ if (isset($_GET['sort_by'])) {
             <p><strong>Discount:</strong> ${movie.discount}</p>
             <p><strong>Overview:</strong> ${movie.overview}</p>
         `;
+            } else {
+              modalInfo.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title ?? 'No Title'}" style="border-radius: 20px; max-width: 195px" />
+            <p><strong>Title:</strong> ${movie.title}</p>
+            <p><strong>Genre:</strong> ${movie.genres}</p>
+            <p><strong>Director:</strong> ${movie.director}</p>
+            <p><strong>Release Year:</strong> ${movie.release_year}</p>
+            <p><strong>Rating:</strong> ${movie.rating}</p>
+            <p><strong>Studio:</strong> ${movie.studio}</p>
+            <p><strong>Date:</strong> ${movie.session_date},${movie.session_time}</p>
+            <p><strong>Ticket:</strong> ${movie.random_ticket}$</p>
+            <p><strong>Place:</strong> ${movie.random_place}</p>
+            <p><strong>Discount:</strong> ${movie.discount}</p>
+            <p><strong>Overview:</strong> ${movie.overview}</p>
+        `;
+            }
           }
+
+
 
           function openModal(event) {
             try {
@@ -410,6 +456,7 @@ if (isset($_GET['sort_by'])) {
               document.body.style.overflow = 'auto';
             }
           });
+
         </script>
 
 
@@ -423,9 +470,11 @@ if (isset($_GET['sort_by'])) {
       <div class="row">
         <div class="col-lg-12">
           <p>
-            Copyright © 2022 <a href="#">Liberty</a> NFT Marketplace Co., Ltd.
-            All rights reserved. &nbsp;&nbsp; Designed by
-            <a title="HTML CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+            Copyright ©
+            <?php echo date('Y'); ?><a> Radiant Rise</a>
+            All rights reserved.&nbsp;&nbsp;Designed by
+            <a title="HTML CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> &
+            Artem Shukhat
           </p>
         </div>
       </div>
@@ -436,6 +485,7 @@ if (isset($_GET['sort_by'])) {
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/login.js"></script>
 
   <script src="assets/js/isotope.min.js"></script>
   <script src="assets/js/owl-carousel.js"></script>

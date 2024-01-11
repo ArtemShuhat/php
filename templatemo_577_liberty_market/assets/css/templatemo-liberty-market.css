@@ -2141,9 +2141,9 @@ body {
 .close {
   color: #aaa;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 28px;
+  top: 15px;
+  right: 5px;
+  font-size: 33px;
   font-weight: bold;
 }
 
@@ -2245,4 +2245,164 @@ body {
   height: 50%;
   border-radius: 5px;
   position: relative;
+}
+
+/* Login form */
+.btn-login {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  background: none;
+  border: none;
+}
+.btn-login:hover {
+  color: var(--light-orange-color);
+}
+.login::before {
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-out;
+}
+
+.login.show::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+.form_container {
+  position: fixed;
+  max-width: 320px;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  z-index: 101;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease-out;
+}
+.login.show .form_container {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.signup_form {
+  display: none;
+}
+.form_container.active .signup_form {
+  display: block;
+}
+.form_container.active .login_form {
+  display: none;
+}
+.form_close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #3d3d3d;
+  font-size: 1rem;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.form_container h2 {
+  font-size: 1rem;
+  color: #3d3d3d;
+  text-align: center;
+}
+.input_box {
+  position: relative;
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+}
+.input_box input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0 30px;
+  color: #000000;
+  transition: all 0.2 ease;
+  border-bottom: 1.5px solid #6c757d;
+}
+.input_box input:focus {
+  border-color: var(--green-darkblue-color);
+}
+.input_box i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+.input_box i.name,
+.input_box i.password {
+  left: 0;
+  color: #7e7e7e;
+}
+.input_box input:focus ~ i.name,
+.input_box input:focus ~ i.password {
+  color: var(--green-darkblue-color);
+}
+.input_box i.pw_hide {
+  right: 0;
+  font-size: 1.3rem;
+  color: #272727;
+  cursor: pointer;
+}
+.option_field {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form_container a {
+  color: #177774;
+  font-size: 0.8rem;
+}
+.form_container a:hover {
+  text-decoration: underline;
+}
+.checkbox {
+  display: flex;
+  column-gap: 8px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+.checkbox input {
+  accent-color: var(--green-darkblue-color);
+}
+.checkbox label {
+  font-size: 12px;
+  user-select: none;
+  cursor: pointer;
+  color: rgb(12, 12, 12);
+}
+.login-now {
+  background: var(--green-darkblue-color);
+  margin-top: 30px;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 10px;
+  border: none;
+  color: var(--light-gray-color);
+}
+.login_signup {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 15px;
+}
+.loginMes {
+  color: var(--light-gray-color);
+  font-weight: 650px;
 }

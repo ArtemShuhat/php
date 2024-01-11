@@ -1,5 +1,5 @@
 <?php
-include "db.php";
+include "db_API.php";
 
 //directors
 function SortDirectors($a, $b)
