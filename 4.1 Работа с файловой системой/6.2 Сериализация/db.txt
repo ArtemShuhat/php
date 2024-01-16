@@ -1,0 +1,1 @@
+a:3:{i:0;a:3:{s:5:"title";s:6:"book 1";s:6:"author";s:8:"author 1";s:4:"year";i:2020;}i:1;a:3:{s:5:"title";s:6:"book 2";s:6:"author";s:8:"author 2";s:4:"year";i:2019;}i:2;a:3:{s:5:"title";s:6:"book 3";s:6:"author";s:8:"author 3";s:4:"year";i:2021;}}
