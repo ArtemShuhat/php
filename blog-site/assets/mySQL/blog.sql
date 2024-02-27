@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Фев 26 2024 г., 20:59
+-- Время создания: Фев 27 2024 г., 20:06
 -- Версия сервера: 10.4.28-MariaDB
 -- Версия PHP: 8.2.4
 
@@ -54,7 +54,7 @@ INSERT INTO `posts` (`post_id`, `title`, `content`, `created_at`, `creator`, `ca
 (11, 'Modern HTML5 and CSS3', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!', '2024-02-13 21:26:07', 'user1', 'HTML/CSS'),
 (12, 'Data Science in Python', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!', '2024-02-13 21:26:24', 'user1', 'Python'),
 (13, 'Creative JavaScript Coding', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!', '2024-02-13 21:26:38', 'user1', 'JavaScript'),
-(14, 'test admin title', 'test admin content', '2024-02-23 10:53:01', 'admin1', 'test admin category');
+(14, 'test admin title!', 'test admin content', '2024-02-23 10:53:01', 'admin1', 'test admin category');
 
 -- --------------------------------------------------------
 

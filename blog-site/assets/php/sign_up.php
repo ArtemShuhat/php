@@ -61,7 +61,7 @@ $conn->close();
 	<link href="../css/style.css" rel="stylesheet">
 </head>
 
-<body style="background: #edf2f7;">
+<body style="background: #F3F4F6;">
 	<a href="../../index.php">
 		<img src="../images/lefts.png" class="ml-3 mt-2" alt="">
 	</a>
@@ -105,14 +105,14 @@ $conn->close();
 
 				<div>
 					<button type="submit"
-						class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
+						class="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Sign
 						up</button>
 				</div>
 			</form>
 
 			<p class="mt-10 text-center text-sm text-gray-500">
 				No account?
-				<a href="./login.php" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login
+				<a href="./login.php" class="font-semibold leading-6 text-gray-600 hover:text-gray-500">Login
 					here</a>
 			</p>
 		</div>

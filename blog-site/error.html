@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./tailwind.config.js" />
+  </head>
+  <body class="bg-secondBg">
+    <div
+      class="flex items-center flex-col justify-center lg:flex-row py-28 px-6 md:px-24 md:py-20 lg:py-32 gap-16 lg:gap-28"
+    >
+      <div class="w-full lg:w-1/2">
+        <img
+          class="hidden lg:block"
+          src="https://i.ibb.co/v30JLYr/Group-192-2.png"
+        />
+        <img
+          class="hidden md:block lg:hidden"
+          src="https://i.ibb.co/c1ggfn2/Group-193.png"
+        />
+        <img class="md:hidden" src="https://i.ibb.co/8gTVH2Y/Group-198.png" />
+      </div>
+      <div class="w-full lg:w-1/2">
+        <h1 class="py-4 text-3xl lg:text-4xl font-extrabold text-gray-700">
+          Looks like you've found the doorway to the great nothing
+        </h1>
+        <p class="py-4 text-base text-gray-700">
+          The content you’re looking for doesn’t exist. Either it was removed,
+          or you mistyped the link.
+        </p>
+        <p class="py-2 text-base text-gray-700">
+          Sorry about that! Please visit our hompage to get where you need to
+          go.
+        </p>
+        <button
+          onclick="window.location.href='./index.php'"
+          class="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-greyBut text-white"
+        >
+          Go back to Homepage
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

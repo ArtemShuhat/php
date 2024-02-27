@@ -12,8 +12,6 @@
 </body>
 
 </html>
-
-
 <?php
 include 'update_post_content.php';
 include 'update_post_title.php';
@@ -59,7 +57,16 @@ $postsPerPage = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $postsPerPage;
 
-$sql = "SELECT * FROM posts LIMIT $offset, $postsPerPage";
+$sortOption = isset($_GET['sort_option']) ? $_GET['sort_option'] : 'Latest';
+
+if ($sortOption === 'Latest') {
+	$sql = "SELECT * FROM posts ORDER BY created_at DESC LIMIT $offset, $postsPerPage";
+} elseif ($sortOption === 'Categories') {
+	$sql = "SELECT * FROM posts ORDER BY category ASC LIMIT $offset, $postsPerPage";
+} else {
+	$sql = "SELECT * FROM posts ORDER BY created_at DESC LIMIT $offset, $postsPerPage";
+}
+
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
@@ -105,10 +112,7 @@ if ($result->num_rows > 0) {
 					</div>
 				</div>
 				<div class="flex items-center justify-between mt-4">
-					<a href="#" class="text-blue-500 hover:underline">Read more</a>
-					<a href="" class="text-xs" style="color: #4B5563;">
-						<?php echo $postId; ?>
-					</a>
+					<a href="error.html" class="text-blue-500 hover:underline">Read more</a>
 					<div>
 						<a href="#" class="flex items-center">
 							<img src="./assets/images/profileImg.png" alt="avatar"
