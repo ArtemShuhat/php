@@ -1,16 +1,6 @@
 <?php
 session_start();
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blog";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+include 'db.php';
 
 $loginMessage = "";
 
@@ -18,10 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$username = $_POST["username"];
 	$password = $_POST["password"];
 
-	$username = mysqli_real_escape_string($conn, $username);
+	$username = mysqli_real_escape_string($mysqli, $username);
 
 	$checkUserQuery = "SELECT * FROM usersdb WHERE username = '$username'";
-	$result = $conn->query($checkUserQuery);
+	$result = $mysqli->query($checkUserQuery);
 
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();
@@ -40,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 }
 
-$conn->close();
+$mysqli->close();
 ?>
 
 <!DOCTYPE html>

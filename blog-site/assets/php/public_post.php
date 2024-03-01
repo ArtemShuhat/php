@@ -15,19 +15,9 @@
 <?php
 include 'update_post_content.php';
 include 'update_post_title.php';
-
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "blog";
+include 'db.php';
 
 $userRole = '';
-
-$mysqli = new mysqli($host, $username, $password, $database);
-
-if ($mysqli->connect_error) {
-	die("Connection error: " . $mysqli->connect_error);
-}
 
 if (isset($_SESSION['id'])) {
 	$userId = $_SESSION['id'];

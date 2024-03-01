@@ -1,14 +1,5 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "blog";
-
-$mysqli = new mysqli($host, $username, $password, $database);
-
-if ($mysqli->connect_error) {
-	die("Connection error: " . $mysqli->connect_error);
-}
+include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['post_id']) && isset($_POST['content'])) {
 	$postId = $_POST['post_id'];

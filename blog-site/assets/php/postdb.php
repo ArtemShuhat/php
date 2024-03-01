@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!isset($_SESSION['username'])) {
@@ -10,18 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$postTitle = $_POST['postTitle'];
 	$postContent = $_POST['postContent'];
 	$category = $_POST['categorySelect'];
-
-	$host = "localhost";
-	$username = "root";
-	$password = "";
-	$database = "blog";
-
-	$mysqli = new mysqli($host, $username, $password, $database);
-
-	if ($mysqli->connect_error) {
-		die("Connection error: " . $mysqli->connect_error);
-	}
-
+	//dsds
 	$sql = "INSERT INTO posts (title, content, creator, category) VALUES (?, ?, ?, ?)";
 	$stmt = $mysqli->prepare($sql);
 

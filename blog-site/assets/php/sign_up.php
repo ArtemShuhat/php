@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blog";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+include 'db.php';
 
 $registrationMessage = "";
 
@@ -19,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$password = $_POST["password"];
 	$confirmPassword = $_POST["confirm_password"];
 
-	$username = mysqli_real_escape_string($conn, $username);
+	$username = mysqli_real_escape_string($mysqli, $username);
 
 	if ($password !== $confirmPassword) {
 		$registrationMessage = "Passwords do not match.";
@@ -28,27 +19,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$role = "user";
 
 		$checkUserQuery = "SELECT * FROM usersdb WHERE username = '$username'";
-		$result = $conn->query($checkUserQuery);
+		$result = $mysqli->query($checkUserQuery);
 
 		if ($result->num_rows > 0) {
 			$registrationMessage = "A user with this name is already registered.";
 		} else {
 			$insertUserQuery = "INSERT INTO usersdb (username, password, role) VALUES ('$username', '$hashedPassword', '$role')";
 
-			if ($conn->query($insertUserQuery) === TRUE) {
-				$_SESSION['id'] = $conn->insert_id;
+			if ($mysqli->query($insertUserQuery) === TRUE) {
+				$_SESSION['id'] = $mysqli->insert_id;
 				$_SESSION['username'] = $username;
 
 				$registrationMessage = "Data has been successfully added to the database. You are now logged in.";
 				header("Location: ../../index.php");
 			} else {
-				$registrationMessage = "Error: " . $insertUserQuery . "<br>" . $conn->error;
+				$registrationMessage = "Error: " . $insertUserQuery . "<br>" . $mysqli->error;
 			}
 		}
 	}
 }
 
-$conn->close();
+$mysqli->close();
 ?>
 
 <!DOCTYPE html>
